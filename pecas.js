@@ -20,5 +20,7 @@ window.PECAS = [
   { nome: "Dado hexagonal", cat: "Brinquedos", preco: 3.5, foto: "", forma: "hex", cor: "#d6a21e", material: "PLA", camada: "0,16 mm", tempo: "1 h 15",
     desc: "Dado para jogos de tabuleiro, com os números bem fundos para pintar." },
   { nome: "Estrela de Natal", cat: "Decoração", preco: 5, foto: "", forma: "estrela", cor: "#d6453d", material: "PLA seda", camada: "0,2 mm", tempo: "2 h 50",
-    desc: "Para pendurar na árvore. O filamento de seda dá-lhe um brilho metálico." }
+    desc: "Para pendurar na árvore. O filamento de seda dá-lhe um brilho metálico." },
+  { nome: "Presépio", cat: "Decoração", preco: 15, foto: "fotos/navityscene.jpg", material: "PLA", camada: "0,2 mm", tempo: "2 h 50",
+    desc: "Para decorara suja casa." }
 ];
