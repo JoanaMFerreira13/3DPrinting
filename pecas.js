@@ -59,6 +59,6 @@ window.PECAS = [
     desc: "Bola de Natal personalizada com o nome, laço, azevinho, flocos de neve e sinos." },
   { nome: "Nome Judite", cat: "Personalizados", preco: 5, material: "PLA", foto: "fotos/juditenamegreen.jpg",
     desc: "Nome em relevo, em verde e branco, com um coração no i." },
-  { nome: "Coração Moxis", cat: "Personalizados", preco: 18, material: "PLA", foto: "fotos/coupleletters.jpg",
-    desc: "Coração vermelho sobre letras brancas, com o nome Moxis." }
+  { nome: "Coração com letras de casal", cat: "Personalizados", preco: 18, material: "PLA", foto: "fotos/coupleletters.jpg",
+    desc: "Coração vermelho sobre letras brancas, com mensagem personalizada." }
 ];
