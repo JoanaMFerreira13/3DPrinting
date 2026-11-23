@@ -29,7 +29,7 @@ h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-hei
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:left;display:flex;flex-direction:column;width:100%;padding:0;font:inherit;color:inherit;cursor:pointer}
 .card:hover .obj{transform:translateY(-4px)}
 .stage{aspect-ratio:4/3;display:grid;place-items:center;background:repeating-linear-gradient(to bottom,transparent 0 7px,var(--stripe) 7px 8px),linear-gradient(var(--bg),var(--surface));border-bottom:1px solid var(--line);overflow:hidden}
-.stage img{width:100%;height:100%;object-fit:cover;display:block}
+.stage img{width:100%;height:100%;object-fit:contain;display:block}
 .obj{width:46%;aspect-ratio:1;background:var(--c);position:relative;transition:transform .25s ease;filter:drop-shadow(0 10px 8px var(--shade))}
 .obj::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 5px,rgba(0,0,0,.14) 5px 6px)}
 .s-vaso{clip-path:polygon(30% 0,70% 0,64% 22%,92% 55%,70% 100%,30% 100%,8% 55%,36% 22%)}
