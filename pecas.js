@@ -60,5 +60,15 @@ window.PECAS = [
   { nome: "Nome Judite", cat: "Personalizados", preco: 5, material: "PLA", foto: "fotos/juditenamegreen.jpg",
     desc: "Nome em relevo, em verde e branco, com um coração no i." },
   { nome: "Iniciais para casal", cat: "Personalizados", preco: 18, material: "PLA", foto: "fotos/coupleletters.jpg",
-    desc: "Coração vermelho sobre letras brancas, com mensagem personalizada." }
+    desc: "Coração vermelho sobre letras brancas, com mensagem personalizada." },
+    { nome: "Porta-chaves Harry", cat: "Porta-chaves", preco: 1, material: "PLA", foto: "fotos/hp.jpg",
+    desc: "Porta-chaves em preto e branco, com argola, em estilo chibi." },
+  { nome: "Porta-chaves Hermione", cat: "Porta-chaves", preco: 1, material: "PLA", foto: "fotos/hermione.jpg",
+    desc: "Porta-chaves em preto e branco, com argola, em estilo chibi." },
+  { nome: "Porta-chaves Ron", cat: "Porta-chaves", preco: 1, material: "PLA", foto: "fotos/ron.jpg",
+    desc: "Porta-chaves em preto e branco, com argola, em estilo chibi." },
+  { nome: "Anjo com coração", cat: "Decoração", preco: 1, material: "PLA", foto: "fotos/angel.jpg",
+    desc: "Anjo de asas abertas a segurar um coração, com argola para pendurar." },
+  { nome: "Ovelha Shaun", cat: "Decoração", preco: 20, material: "PLA", foto: "fotos/shaunsheep.jpg",
+    desc: "Figura grande em preto e branco, com braços e pernas." }
 ];
