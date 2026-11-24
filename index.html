@@ -1,128 +1,185 @@
-<!DOCTYPE html>
-<html lang="pt-PT">
+<!doctype html>
+<html lang="pt">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="As peças que a nossa impressora 3D já fez.">
-<title>Cantinho dos Moxis – As criações da nossa impressora 3D</title>
+<title>Cantinho dos Moxis — Impressões 3D</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖨️</text></svg>">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap">
 <style>
-:root{--bg:#f2f4f0;--surface:#fff;--ink:#16211d;--muted:#55635d;--line:#d5dcd6;--accent:#0b7f7a;--accent-ink:#fff;--stripe:rgba(22,33,29,.07);--shade:rgba(0,0,0,.18);color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1513;--surface:#18201d;--ink:#e9efeb;--muted:#9aa9a2;--line:#2b3731;--accent:#3cc7c0;--accent-ink:#06201e;--stripe:rgba(233,239,235,.06);--shade:rgba(0,0,0,.35);color-scheme:dark}}
-*,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-height:1.1;margin:0}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
-.hero{position:relative;padding:4.5rem 0 3.5rem;overflow:hidden;border-bottom:1px solid var(--line)}
-.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 11px,var(--stripe) 11px 12px);-webkit-mask-image:linear-gradient(to top,#000,transparent 85%);mask-image:linear-gradient(to top,#000,transparent 85%)}
-.hero .wrap{position:relative}
-.hero h1{font-size:clamp(2.6rem,9vw,5.6rem);font-weight:800;letter-spacing:-.03em;max-width:12ch}
-.hero p{max-width:46ch;color:var(--muted);font-size:1.15rem;margin:1.25rem 0 0}
-.stats{display:flex;flex-wrap:wrap;gap:.5rem 2rem;margin:2rem 0 0;padding:0;list-style:none;font-weight:600}
-.stats span{color:var(--muted);font-weight:400}
-.bar{display:flex;flex-wrap:wrap;gap:.5rem;padding:2rem 0 1.25rem}
-.bar button{font:inherit;font-weight:600;font-size:.95rem;padding:.55rem 1.05rem;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;min-height:44px}
-.bar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.25rem;padding:0 0 4rem;margin:0;list-style:none}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:left;display:flex;flex-direction:column;width:100%;padding:0;font:inherit;color:inherit;cursor:pointer}
-.card:hover .obj{transform:translateY(-4px)}
-.stage{aspect-ratio:4/3;display:grid;place-items:center;background:repeating-linear-gradient(to bottom,transparent 0 7px,var(--stripe) 7px 8px),linear-gradient(var(--bg),var(--surface));border-bottom:1px solid var(--line);overflow:hidden}
-.stage{position:relative}
-.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
-.obj{width:46%;aspect-ratio:1;background:var(--c);position:relative;transition:transform .25s ease;filter:drop-shadow(0 10px 8px var(--shade))}
-.obj::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 5px,rgba(0,0,0,.14) 5px 6px)}
-.s-vaso{clip-path:polygon(30% 0,70% 0,64% 22%,92% 55%,70% 100%,30% 100%,8% 55%,36% 22%)}
-.s-cubo{clip-path:polygon(0 12%,12% 0,100% 0,100% 88%,88% 100%,0 100%)}
-.s-torre{width:30%;aspect-ratio:1/1.5;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}
-.s-disco{clip-path:circle(50%)}
-.s-hex{clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%)}
-.s-estrela{clip-path:polygon(50% 0,62% 36%,100% 38%,70% 60%,80% 98%,50% 76%,20% 98%,30% 60%,0 38%,38% 36%)}
-.info{padding:1rem 1.1rem 1.2rem}
-.info h3{font-size:1.25rem;font-weight:600;margin-bottom:.25rem}
-.info p{margin:0;color:var(--muted);font-size:.95rem}
-.tag{display:inline-block;font-size:.8rem;font-weight:600;color:var(--accent);margin-bottom:.4rem}
-dialog{border:1px solid var(--line);border-radius:16px;padding:0;width:min(560px,calc(100% - 2rem));max-height:calc(100% - 2rem);background:var(--surface);color:var(--ink)}
-dialog::backdrop{background:rgba(0,0,0,.55)}
-dialog .stage{aspect-ratio:16/10}
-dialog .body{padding:1.25rem 1.4rem 1.5rem}
-dialog h2{font-size:1.8rem;margin-bottom:.5rem}
-dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.25rem;margin:1rem 0 1.25rem}
-dt{color:var(--muted)}dd{margin:0;font-weight:600}
-.close{font:inherit;font-weight:600;padding:.6rem 1.2rem;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer;min-height:44px}
-.meta{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem}
-.price{font:800 1.15rem "Bricolage Grotesque",Figtree,system-ui,sans-serif;white-space:nowrap}
-.bar select{font:inherit;font-weight:600;font-size:.95rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);min-height:44px}
-.vazio{color:var(--muted);padding:2rem 0 4rem}
-footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);font-size:.95rem}
-@media (prefers-reduced-motion:reduce){.obj{transition:none}}
-.grid li{display:flex}
-.card{height:100%}
-.info{flex:1;display:flex;flex-direction:column}
-.meta{margin-top:auto}
+:root{--bg:#faf8f5;--card:#fff;--tx:#1d1b19;--mu:#6b645c;--ac:#e8590c;--ac2:#fff;--bd:#e6e0d8;--soft:#f3ede4;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--card:#211e1b;--tx:#f1ece6;--mu:#a29a90;--ac:#ff8a4c;--ac2:#1a1209;--bd:#3a3530;--soft:#2a2622;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171513;--card:#211e1b;--tx:#f1ece6;--mu:#a29a90;--ac:#ff8a4c;--ac2:#1a1209;--bd:#3a3530;--soft:#2a2622;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3{line-height:1.2;margin:0}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--bd)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
+.logo{font-weight:800;font-size:1.15rem;text-decoration:none}.logo span{color:var(--ac)}
+nav{display:flex;gap:14px;overflow-x:auto;font-size:.92rem}
+nav a{text-decoration:none;color:var(--mu);white-space:nowrap}nav a:hover{color:var(--ac)}
+.hero{padding:54px 0 34px;text-align:center}
+.hero h1{font-size:clamp(1.9rem,6vw,3rem);max-width:700px;margin:0 auto 12px}
+.hero p{color:var(--mu);max-width:560px;margin:0 auto 22px}
+.btn{display:inline-block;border:0;background:var(--ac);color:var(--ac2);padding:11px 20px;border-radius:999px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.o{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+section{padding:36px 0}
+h2{font-size:1.6rem;margin-bottom:6px}.sub{color:var(--mu);margin:0 0 20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 15px;border-radius:999px;font:inherit;cursor:pointer}
+.tab.on{background:var(--ac);color:var(--ac2);border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;aspect-ratio:4/3;display:grid;place-items:center;font-size:3.6rem;background:var(--soft)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.cb{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cb small{color:var(--mu)}.code{font-size:.75rem;color:var(--ac);font-weight:700;letter-spacing:.04em}
+.price{font-weight:800}.cb .btn{margin-top:auto;text-align:center;padding:9px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:s}
+.step{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;counter-increment:s}
+.step::before{content:counter(s);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ac);color:var(--ac2);font-weight:800;margin-bottom:8px}
+.step b{display:block}.step span{color:var(--mu);font-size:.92rem}
+form{display:grid;gap:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+label{display:grid;gap:4px;font-size:.88rem;font-weight:600}
+input,select,textarea{font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);width:100%}
+textarea{min-height:90px;resize:vertical}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px}
+dialog{border:1px solid var(--bd);border-radius:18px;background:var(--card);color:var(--tx);width:min(520px,92vw);padding:20px;max-height:90vh}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.out{margin-top:12px;padding:12px;border-radius:12px;background:var(--soft);font-size:.9rem}
+.out textarea{min-height:120px;margin-top:8px}
+.x{float:right;background:none;border:0;color:var(--mu);font-size:1.4rem;cursor:pointer}
+footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:center;font-size:.9rem}
 </style>
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <h1>Cantinho dos Moxis</h1>
-    <p>As peças que a nossa impressora 3D já fez: úteis, divertidas e algumas só para ver se resultava.</p>
-    <ul class="stats" id="stats"></ul>
-  </div>
-</header>
-<main class="wrap">
-  <div class="bar" role="group" aria-label="Filtrar por categoria" id="filters"></div>
-  <ul class="grid" id="grid"></ul>
-</main>
-<dialog id="dlg" aria-labelledby="dt">
-  <div class="stage" id="dstage"></div>
-  <div class="body">
-    <h2 id="dt"></h2>
-    <p id="dd" style="margin:0;color:var(--muted)"></p>
-    <dl id="dl"></dl>
-    <button class="close" id="close">Fechar</button>
-  </div>
-</dialog>
-<footer><div class="wrap">Feito com filamento, paciência e muitas horas de impressão.</div></footer>
+<header><div class="wrap bar">
+<a class="logo" href="#topo" id="brand"></a>
+<nav><a href="#catalogo">Catálogo</a><a href="#personalizado">Personalizados</a><a href="#encomendar">Como encomendar</a><a href="#contactos">Contactos</a></nav>
+</div></header>
 
-<!-- As peças estão no ficheiro pecas.js -->
+<main id="topo">
+<div class="wrap">
+<div class="hero">
+<h1>Peças impressas em 3D, feitas com cuidado e à sua medida</h1>
+<p>Decoração, porta-chaves e peças com o seu nome, prontas a encomendar. Ou conte-nos a sua ideia e criamos uma peça única.</p>
+<a class="btn" href="#catalogo">Ver catálogo</a> <a class="btn o" href="#personalizado">Criar peça personalizada</a>
+</div>
+
+<section id="catalogo">
+<h2>Catálogo</h2>
+<p class="sub">Escolha um artigo e peça a sua encomenda. O preço final e o envio são confirmados por e-mail.</p>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<section id="personalizado">
+<h2>Peça personalizada</h2>
+<p class="sub">Cor, tamanho, nome gravado ou uma ideia sua: diga-nos o que imagina.</p>
+<div class="panel">
+<form id="fc">
+<div class="row"><label>Nome<input name="nome" required></label><label>E-mail<input name="email" type="email" required></label></div>
+<div class="row"><label>Tipo de personalização
+<select name="tipo"><option>Alterar cor ou material</option><option>Alterar tamanho</option><option>Texto ou nome gravado</option><option>Tenho um ficheiro 3D (STL)</option><option>Tenho só uma ideia ou desenho</option></select></label>
+<label>Cor pretendida<select name="cor" class="cores"></select></label></div>
+<div class="row"><label>Tamanho aproximado<input name="tam" placeholder="ex: 15 cm de altura"></label><label>Texto a gravar (se aplicável)<input name="texto"></label></div>
+<label>Descreva a sua ideia<textarea name="desc" required placeholder="Para que serve, onde vai ser usado, prazo desejado…"></textarea></label>
+<p class="sub" style="margin:0">Se tem ficheiro 3D ou desenho, anexe-o na mensagem de e-mail que se abre ao enviar.</p>
+<button class="btn" type="submit">Enviar pedido</button>
+</form>
+<div class="out" hidden></div>
+</div>
+</section>
+
+<section id="encomendar">
+<h2>Como encomendar</h2>
+<p class="sub">Simples e sem pagamento antecipado.</p>
+<div class="steps">
+<div class="step"><b>Escolha</b><span>Selecione um artigo do catálogo ou descreva a sua peça personalizada.</span></div>
+<div class="step"><b>Envie o pedido</b><span>Preencha o formulário. Abre-se um e-mail já escrito para nós.</span></div>
+<div class="step"><b>Confirmamos</b><span>Respondemos com preço final, prazo e custo de envio.</span></div>
+<div class="step"><b>Pague e receba</b><span>Pagamento por MB Way ou transferência. Enviamos com código de seguimento.</span></div>
+</div>
+</section>
+
+<section id="contactos">
+<h2>Contactos</h2>
+<p class="sub">Dúvidas? Escreva-nos para <a id="mailL" href="#"></a>.</p>
+</section>
+</div>
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> <span id="brand2"></span> · Feito com amor e muito filamento</div></footer>
+
+<dialog id="dlg">
+<button class="x" id="cl" aria-label="Fechar">×</button>
+<h3 id="dt">Encomendar</h3>
+<p class="sub" id="ds"></p>
+<form id="fo">
+<div class="row"><label>Nome<input name="nome" required></label><label>E-mail<input name="email" type="email" required></label></div>
+<div class="row"><label>Telefone<input name="tel" type="tel"></label><label>Quantidade<input name="qtd" type="number" min="1" value="1" required></label></div>
+<label>Cor<select name="cor" class="cores"></select></label>
+<label>Morada de entrega<textarea name="morada" style="min-height:64px" required></textarea></label>
+<label>Observações<textarea name="obs" style="min-height:64px"></textarea></label>
+<button class="btn" type="submit">Enviar encomenda</button>
+</form>
+<div class="out" hidden></div>
+</dialog>
+
 <script src="pecas.js"></script>
 <script>
-const PECAS=window.PECAS||[];
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const cats=["Todas",...new Set(PECAS.map(p=>p.cat).filter(Boolean))];
-let ativa="Todas",mat="Todos";
-const materiais=[...new Set(PECAS.map(p=>p.material).filter(Boolean))];
-const preco=p=>typeof p.preco==="number"?new Intl.NumberFormat("pt-PT",{style:"currency",currency:"EUR"}).format(p.preco):"";
+var CFG={brand:"Cantinho dos Moxis",email:"o-teu-email@gmail.com"};
+var CORES=["Preto","Branco","Cinzento","Vermelho","Azul","Verde","Amarelo","Laranja","Rosa","Madeira","Outra (indicar nas observações)"];
+var P=window.PECAS||[];
+var CATS=["Todos"];
+P.forEach(function(p){if(p.cat&&CATS.indexOf(p.cat)<0)CATS.push(p.cat)});
+var cur="Todos",sel=null;
+var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function eur(p){return typeof p.preco==="number"?new Intl.NumberFormat("pt-PT",{style:"currency",currency:"EUR"}).format(p.preco):"Preço sob consulta"}
 
-function stage(p){
-  return p.foto
-    ? `<div class="stage"><img src="${esc(p.foto)}" alt="${esc(p.nome)}" loading="lazy"></div>`
-    : `<div class="stage"><div class="obj s-${esc(p.forma||"cubo")}" style="--c:${esc(p.cor||"#0b7f7a")}"></div></div>`;
-}
-function desenhar(){
-  const lista=PECAS.map((p,i)=>({p,i})).filter(x=>(ativa==="Todas"||x.p.cat===ativa)&&(mat==="Todos"||x.p.material===mat));
-  $("#grid").innerHTML=lista.length?lista.map(({p,i})=>`<li><button class="card" data-i="${i}" aria-label="Ver detalhes: ${esc(p.nome)}">${stage(p)}<div class="info"><span class="tag">${esc(p.cat)}</span><h3>${esc(p.nome)}</h3><div class="meta"><p>${esc(p.material)}</p><span class="price">${esc(preco(p))}</span></div></div></button></li>`).join(""):`<li class="vazio">Ainda não há peças. Adiciona a primeira no ficheiro pecas.js.</li>`;
-}
-function filtros(){const b=cats.length>2?cats.map(c=>`<button type="button" aria-pressed="${c===ativa}">${esc(c)}</button>`).join(""):"";const s=materiais.length>1?`<select id="mat" aria-label="Filtrar por material"><option value="Todos">Todos os materiais</option>${materiais.map(m=>`<option value="${esc(m)}"${m===mat?" selected":""}>${esc(m)}</option>`).join("")}</select>`:"";$("#filters").innerHTML=b+s}
-$("#filters").addEventListener("change",e=>{if(e.target.id==="mat"){mat=e.target.value;desenhar()}});
-$("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ativa=b.textContent;filtros();desenhar()});
-$("#grid").addEventListener("click",e=>{
-  const b=e.target.closest(".card");if(!b)return;
-  const p=PECAS[b.dataset.i];
-  $("#dstage").outerHTML=stage(p).replace('class="stage"','class="stage" id="dstage"');
-  $("#dt").textContent=p.nome;$("#dd").textContent=p.desc||"";
-  const linhas=[["Preço",preco(p)],["Categoria",p.cat],["Material",p.material],["Altura da camada",p.camada],["Tempo de impressão",p.tempo]].filter(l=>l[1]);
-  $("#dl").innerHTML=linhas.map(l=>`<dt>${l[0]}</dt><dd>${esc(l[1])}</dd>`).join("");
-  $("#dlg").showModal();
-});
-$("#close").addEventListener("click",()=>$("#dlg").close());
-$("#dlg").addEventListener("click",e=>{if(e.target===$("#dlg"))$("#dlg").close()});
-const mats=new Set(PECAS.map(p=>(p.material||"").split(" ")[0]).filter(Boolean)).size;
-$("#stats").innerHTML=`<li>${PECAS.length} <span>peças</span></li><li>${cats.length-1} <span>categorias</span></li><li>${mats} <span>materiais</span></li>`;
-filtros();desenhar();
+document.title=CFG.brand+" — Impressões 3D";
+$("#brand").innerHTML=esc(CFG.brand.split(" ")[0])+" <span>"+esc(CFG.brand.split(" ").slice(1).join(" "))+"</span>";
+$("#brand2").textContent=CFG.brand;
+$("#yr").textContent=new Date().getFullYear();
+$("#mailL").textContent=CFG.email;$("#mailL").href="mailto:"+CFG.email;
+document.querySelectorAll(".cores").forEach(function(s){s.innerHTML=CORES.map(function(c){return"<option>"+c+"</option>"}).join("")});
+
+function tabs(){
+$("#tabs").innerHTML=CATS.map(function(k){return'<button class="tab'+(k===cur?" on":"")+'" data-k="'+esc(k)+'">'+esc(k)+"</button>"}).join("");
+$("#grid").innerHTML=P.map(function(x,i){return{x:x,i:i}}).filter(function(o){return cur==="Todos"||o.x.cat===cur}).map(function(o){var x=o.x;
+var img=x.foto?'<img src="'+esc(x.foto)+'" alt="'+esc(x.nome)+'" loading="lazy">':"🎁";
+return'<div class="card"><div class="thumb">'+img+'</div><div class="cb"><span class="code">'+esc(x.cat)+"</span><b>"+esc(x.nome)+"</b><small>"+esc(x.material)+'</small><span class="price">'+eur(x)+'</span><button class="btn" data-i="'+o.i+'">Encomendar</button></div></div>'}).join("")}
+tabs();
+$("#tabs").onclick=function(e){var k=e.target.dataset.k;if(k){cur=k;tabs()}};
+$("#grid").onclick=function(e){var b=e.target.closest("[data-i]");if(!b)return;
+sel=P[+b.dataset.i];
+$("#dt").textContent=sel.nome;
+$("#ds").textContent=(sel.desc?sel.desc+" · ":"")+(typeof sel.preco==="number"?eur(sel)+" (preço indicativo)":"Preço a confirmar por e-mail");
+$("#fo").reset();$("#dlg .out").hidden=true;$("#dlg").showModal()};
+$("#cl").onclick=function(){$("#dlg").close()};
+
+function send(f,out,subject,lines){
+var fd=new FormData(f),body="";
+lines.forEach(function(l){var v=l[1].charAt(0)==="="?l[1].slice(1):fd.get(l[1]);if(v)body+=l[0]+": "+v+"\n"});
+var url="mailto:"+CFG.email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+var a=document.createElement("a");a.href=url;document.body.appendChild(a);a.click();a.remove();
+out.hidden=false;
+out.innerHTML="<b>Quase lá!</b> Abrimos o seu e-mail com o pedido pronto, basta carregar em enviar. Se não abriu, copie o texto abaixo e envie para <b>"+esc(CFG.email)+"</b>.<textarea readonly></textarea>";
+out.querySelector("textarea").value=body}
+
+$("#fo").onsubmit=function(e){e.preventDefault();
+send(e.target,$("#dlg .out"),"Encomenda – "+sel.nome,
+[["Artigo","="+sel.nome],["Nome","nome"],["E-mail","email"],["Telefone","tel"],["Quantidade","qtd"],["Cor","cor"],["Morada","morada"],["Observações","obs"]])};
+$("#fc").onsubmit=function(e){e.preventDefault();
+send(e.target,$("#personalizado .out"),"Pedido personalizado",
+[["Nome","nome"],["E-mail","email"],["Tipo","tipo"],["Cor","cor"],["Tamanho","tam"],["Texto a gravar","texto"],["Ideia","desc"]])};
 </script>
 </body>
 </html>
