@@ -69,6 +69,6 @@ window.PECAS = [
     desc: "Porta-chaves em preto e branco, com argola, em estilo chibi." },
   { nome: "Anjo com coração", cat: "Decoração", preco: 1, material: "PLA", foto: "fotos/angel.jpg",
     desc: "Anjo de asas abertas a segurar um coração, com argola para pendurar." },
-  { nome: "Ovelha Shaun", cat: "Decoração", preco: 20, material: "PLA", foto: "fotos/shaunsheep.jpg",
-    desc: "Figura grande em preto e branco, com braços e pernas." }
+  { nome: "Ovelha", cat: "Decoração", preco: 20, material: "PLA", foto: "fotos/shaunsheep.jpg",
+    desc: "Figura grande." }
 ];
