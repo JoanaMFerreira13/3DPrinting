@@ -23,9 +23,9 @@ window.PECAS = [
     desc: "Para pendurar na árvore. O filamento de seda dá-lhe um brilho metálico." },*/
   { nome: "Presépio", cat: "Decoração", preco: 15, foto: "fotos/navityscene.jpg", material: "PLA", camada: "0,2 mm", tempo: "2 h 50",
     desc: "Presépio com a Sagrada Família, os Reis Magos e os animais, sob um arco de malha com estrela." },
-  { nome: "Laço vermelho", cat: "Decoração", preco: 2, material: "PLA", foto: "fotos/treebowredone.jpg",
+  { nome: "Laço vermelho", cat: "Decoração", preco: 1.5, material: "PLA", foto: "fotos/treebowredone.jpg",
     desc: "Laço grande com argola para pendurar na árvore ou numa porta." },
-  { nome: "Laço com corações", cat: "Decoração", preco: 2, material: "PLA", foto: "fotos/treebowredtwo.jpg",
+  { nome: "Laço com corações", cat: "Decoração", preco: 1.5, material: "PLA", foto: "fotos/treebowredtwo.jpg",
     desc: "Laço com dois corações recortados nas pontas e argola para pendurar." },
   { nome: "Grinch e árvore", cat: "Decoração", preco: 2, material: "PLA", foto: "fotos/grinchtreehand.jpg",
     desc: "Enfeite em várias cores com a mão do Grinch a segurar uma árvore de Natal." },
