@@ -19,7 +19,10 @@ a{color:inherit}
 .wrap{max-width:1040px;margin:0 auto;padding:0 18px}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--bd)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
-.logo{font-weight:800;font-size:1.15rem;text-decoration:none}.logo span{color:var(--ac)}
+.logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:1.15rem;text-decoration:none}
+.bn{font-style:normal}
+.owl{flex:none;width:30px;height:34px;transition:transform .25s ease}
+.logo:hover .owl{transform:rotate(-10deg)}.logo span{color:var(--ac)}
 nav{display:flex;gap:14px;overflow-x:auto;font-size:.92rem}
 nav a{text-decoration:none;color:var(--mu);white-space:nowrap}nav a:hover{color:var(--ac)}
 .hero{padding:54px 0 34px;text-align:center}
@@ -72,6 +75,11 @@ nav{min-width:0}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .acts{display:flex;gap:10px;flex-wrap:wrap}
 .sum{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:.9rem;margin-bottom:12px;white-space:pre-line}
+body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='none' stroke='%231f7a4d' stroke-width='1.6' stroke-linecap='round' opacity='.2'%3E%3Cg transform='translate%2830 34%29'%3E%3Cpath d='M0-9V9M-8-4.5L8 4.5M-8 4.5L8-4.5'/%3E%3C/g%3E%3Cg transform='translate%28112 100%29 scale%28.8%29'%3E%3Cpath d='M0-9V9M-8-4.5L8 4.5M-8 4.5L8-4.5'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23c8342b' opacity='.2'%3E%3Ccircle cx='96' cy='28' r='3'/%3E%3Ccircle cx='102' cy='33' r='3'/%3E%3Ccircle cx='34' cy='122' r='3'/%3E%3Ccircle cx='40' cy='127' r='3'/%3E%3C/g%3E%3Cg fill='%23e8a317' opacity='.24'%3E%3Cpath d='M138 30l2 5 5 .5-4 3.5 1.2 5-4.2-3-4.2 3 1.2-5-4-3.5 5-.5z'/%3E%3C/g%3E%3C/svg%3E");background-size:160px 160px}
+#snow{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:8}
+#snow i{position:absolute;top:-12px;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#fff;opacity:var(--o);box-shadow:0 0 2px rgba(70,110,170,.75);animation:fall var(--d) linear var(--dl) infinite}
+@keyframes fall{from{transform:translate3d(0,-5vh,0)}50%{transform:translate3d(var(--sw),52vh,0)}to{transform:translate3d(0,108vh,0)}}
+@media (prefers-reduced-motion:reduce){#snow{display:none}.owl{transition:none}}
 </style>
 </head>
 <body>
@@ -170,8 +178,15 @@ var $=function(s){return document.querySelector(s)};
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function eur(p){return typeof p.preco==="number"?new Intl.NumberFormat("pt-PT",{style:"currency",currency:"EUR"}).format(p.preco):"Preço sob consulta"}
 
+var OWL='<svg class="owl" viewBox="0 -4 32 36" aria-hidden="true"><path d="M5 3l6 4.5Q16 6 21 7.5L27 3v14q0 12-11 12T5 17z" fill="var(--ac)"/><ellipse cx="16" cy="22" rx="7" ry="6.5" fill="#fff3e6"/><path d="M12.5 20.5q1.5 1.6 3 0m1 0q1.5 1.6 3 0M12.5 24q1.5 1.6 3 0m1 0q1.5 1.6 3 0" fill="none" stroke="#e8b88a" stroke-width="1" stroke-linecap="round"/><circle cx="11.3" cy="13" r="4.3" fill="#fff"/><circle cx="20.7" cy="13" r="4.3" fill="#fff"/><circle cx="11.8" cy="13.3" r="2" fill="#1d1b19"/><circle cx="20.2" cy="13.3" r="2" fill="#1d1b19"/><circle cx="12.4" cy="12.5" r=".7" fill="#fff"/><circle cx="20.8" cy="12.5" r=".7" fill="#fff"/><path d="M14.3 15.6h3.4L16 19z" fill="#ffd166"/><ellipse cx="12" cy="29.2" rx="2.6" ry="1.1" fill="#ffd166"/><ellipse cx="20" cy="29.2" rx="2.6" ry="1.1" fill="#ffd166"/><path d="M8.5 7C9 1.5 13-2.5 19-2c4 .5 6.500 2.500 7.500 5.500C23.500 2 22 3.200 23.500 7z" fill="#d62828"/><rect x="6.500" y="5.200" width="19" height="3.600" rx="1.800" fill="#fff"/><circle cx="26.500" cy="3.800" r="2.300" fill="#fff"/></svg>';
+(function(){if(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+var s=document.createElement("div");s.id="snow";s.setAttribute("aria-hidden","true");
+var n=innerWidth<600?22:38,h="",i,z;
+for(i=0;i<n;i++){z=2+Math.random()*4;
+h+='<i style="--x:'+(Math.random()*100).toFixed(1)+'%;--s:'+z.toFixed(1)+'px;--o:'+(.5+Math.random()*.5).toFixed(2)+';--d:'+(9+Math.random()*10).toFixed(1)+'s;--dl:-'+(Math.random()*15).toFixed(1)+'s;--sw:'+((Math.random()*2-1)*30).toFixed(0)+'px"></i>'}
+s.innerHTML=h;document.body.appendChild(s)})();
 document.title=CFG.brand+" — Impressões 3D";
-$("#brand").innerHTML=esc(CFG.brand.split(" ")[0])+" <span>"+esc(CFG.brand.split(" ").slice(1).join(" "))+"</span>";
+$("#brand").innerHTML=OWL+'<i class="bn">'+esc(CFG.brand.split(" ")[0])+" <span>"+esc(CFG.brand.split(" ").slice(1).join(" "))+"</span></i>";
 $("#brand2").textContent=CFG.brand;
 $("#yr").textContent=new Date().getFullYear();
 $("#mailL").textContent=CFG.email;$("#mailL").href="mailto:"+CFG.email;
