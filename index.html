@@ -56,12 +56,29 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
 .out textarea{min-height:120px;margin-top:8px}
 .x{float:right;background:none;border:0;color:var(--mu);font-size:1.4rem;cursor:pointer}
 footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:center;font-size:.9rem}
+nav{min-width:0}
+.cartbtn{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:7px 14px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.cartbtn b{background:var(--ac);color:var(--ac2);border-radius:999px;padding:0 7px;margin-left:6px;font-size:.8rem}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--bd)}
+.line img{width:56px;height:56px;object-fit:contain;background:var(--soft);border-radius:10px}
+.line .nm{font-weight:700}
+.ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.line select{width:auto;padding:5px 8px;font-size:.85rem}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--bd);border-radius:999px}
+.qty button{border:0;background:none;color:var(--tx);width:30px;height:30px;font-size:1.1rem;cursor:pointer}
+.qty span{min-width:22px;text-align:center;font-weight:700}
+.rm{background:none;border:0;color:var(--mu);cursor:pointer;font:inherit;font-size:.85rem;text-decoration:underline}
+.tot{display:flex;justify-content:space-between;gap:10px;font-weight:800;font-size:1.1rem;padding:14px 0}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.sum{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:.9rem;margin-bottom:12px;white-space:pre-line}
 </style>
 </head>
 <body>
 <header><div class="wrap bar">
 <a class="logo" href="#topo" id="brand"></a>
 <nav><a href="#catalogo">Catálogo</a><a href="#personalizado">Personalizados</a><a href="#encomendar">Como encomendar</a><a href="#contactos">Contactos</a></nav>
+<button class="cartbtn" id="cb" type="button" aria-haspopup="dialog">🛒 Carrinho <b id="cn" hidden>0</b></button>
 </div></header>
 
 <main id="topo">
@@ -74,7 +91,7 @@ footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:
 
 <section id="catalogo">
 <h2>Catálogo</h2>
-<p class="sub">Escolha um artigo e peça a sua encomenda. O preço final e o envio são confirmados por e-mail.</p>
+<p class="sub">Adicione os artigos ao carrinho e, no fim, peça a sua encomenda. O preço final e o envio são confirmados por e-mail.</p>
 <div class="tabs" id="tabs"></div>
 <div class="grid" id="grid"></div>
 </section>
@@ -101,10 +118,10 @@ footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:
 <h2>Como encomendar</h2>
 <p class="sub">Simples e sem pagamento antecipado.</p>
 <div class="steps">
-<div class="step"><b>Escolha</b><span>Selecione um artigo do catálogo ou descreva a sua peça personalizada.</span></div>
-<div class="step"><b>Envie o pedido</b><span>Preencha o formulário. Abre-se um e-mail já escrito para nós.</span></div>
+<div class="step"><b>Escolha</b><span>Adicione artigos ao carrinho ou descreva a sua peça personalizada.</span></div>
+<div class="step"><b>Envie o pedido</b><span>Abra o carrinho, carregue em Pedir encomenda e preencha o formulário. Abre-se um e-mail já escrito para nós.</span></div>
 <div class="step"><b>Confirmamos</b><span>Respondemos com preço final, prazo e custo de envio.</span></div>
-<div class="step"><b>Pague e receba</b><span>Pagamento por MB Way. Enviamos com código de seguimento.</span></div>
+<div class="step"><b>Pague e receba</b><span>Pagamento por MB Way ou transferência. Enviamos com código de seguimento.</span></div>
 </div>
 </section>
 
@@ -117,14 +134,22 @@ footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:
 
 <footer><div class="wrap">© <span id="yr"></span> <span id="brand2"></span> · Feito com amor e muito filamento</div></footer>
 
+<dialog id="dcart">
+<button class="x" id="cl2" aria-label="Fechar">×</button>
+<h3>O seu carrinho</h3>
+<div id="lines"></div>
+<div class="tot"><span>Total indicativo</span><span id="tt"></span></div>
+<div class="acts"><button class="btn o" id="more" type="button">Continuar a ver</button><button class="btn" id="go" type="button">Pedir encomenda</button></div>
+</dialog>
+
 <dialog id="dlg">
 <button class="x" id="cl" aria-label="Fechar">×</button>
-<h3 id="dt">Encomendar</h3>
-<p class="sub" id="ds"></p>
+<h3>Pedir encomenda</h3>
+<p class="sub">Confirme os dados e envie. Respondemos com o preço final, o prazo e o envio.</p>
+<div class="sum" id="sum"></div>
 <form id="fo">
 <div class="row"><label>Nome<input name="nome" required></label><label>E-mail<input name="email" type="email" required></label></div>
-<div class="row"><label>Telefone<input name="tel" type="tel"></label><label>Quantidade<input name="qtd" type="number" min="1" value="1" required></label></div>
-<label>Cor<select name="cor" class="cores"></select></label>
+<label>Telefone<input name="tel" type="tel"></label>
 <label>Morada de entrega<textarea name="morada" style="min-height:64px" required></textarea></label>
 <label>Observações<textarea name="obs" style="min-height:64px"></textarea></label>
 <button class="btn" type="submit">Enviar encomenda</button>
@@ -134,8 +159,9 @@ footer{border-top:1px solid var(--bd);padding:26px 0;color:var(--mu);text-align:
 
 <script src="pecas.js"></script>
 <script>
-var CFG={brand:"Cantinho dos Moxis",email:"TESTE-EMAILnotworking@gmail.com"};
+var CFG={brand:"Cantinho dos Moxis",email:"o-teu-email@gmail.com"};
 var CORES=["Preto","Branco","Cinzento","Vermelho","Azul","Verde","Amarelo","Laranja","Rosa","Madeira","Outra (indicar nas observações)"];
+var CORES2=["Como na foto"].concat(CORES);
 var P=window.PECAS||[];
 var CATS=["Todos"];
 P.forEach(function(p){if(p.cat&&CATS.indexOf(p.cat)<0)CATS.push(p.cat)});
@@ -155,13 +181,40 @@ function tabs(){
 $("#tabs").innerHTML=CATS.map(function(k){return'<button class="tab'+(k===cur?" on":"")+'" data-k="'+esc(k)+'">'+esc(k)+"</button>"}).join("");
 $("#grid").innerHTML=P.map(function(x,i){return{x:x,i:i}}).filter(function(o){return cur==="Todos"||o.x.cat===cur}).map(function(o){var x=o.x;
 var img=x.foto?'<img src="'+esc(x.foto)+'" alt="'+esc(x.nome)+'" loading="lazy">':"🎁";
-return'<div class="card"><div class="thumb">'+img+'</div><div class="cb"><span class="code">'+esc(x.cat)+"</span><b>"+esc(x.nome)+"</b><small>"+esc(x.material)+'</small><span class="price">'+eur(x)+'</span><button class="btn" data-i="'+o.i+'">Encomendar</button></div></div>'}).join("")}
+return'<div class="card"><div class="thumb">'+img+'</div><div class="cb"><span class="code">'+esc(x.cat)+"</span><b>"+esc(x.nome)+"</b><small>"+esc(x.material)+'</small><span class="price">'+eur(x)+'</span><button class="btn" data-i="'+o.i+'">Adicionar ao Carrinho</button></div></div>'}).join("")}
 tabs();
 $("#tabs").onclick=function(e){var k=e.target.dataset.k;if(k){cur=k;tabs()}};
+
+/* ---------- Carrinho ---------- */
+var CART=[];
+try{CART=JSON.parse(localStorage.getItem("cmoxis-cart")||"[]")}catch(e){}
+function findP(n){for(var i=0;i<P.length;i++)if(P[i].nome===n)return P[i]}
+CART=(Array.isArray(CART)?CART:[]).filter(function(l){return l&&findP(l.n)&&l.q>0});
+function count(){var n=CART.reduce(function(a,l){return a+l.q},0);$("#cn").textContent=n;$("#cn").hidden=!n}
+function save(){try{localStorage.setItem("cmoxis-cart",JSON.stringify(CART))}catch(e){}count()}
+count();
+function total(){var t=0,sp=false;CART.forEach(function(l){var p=findP(l.n);if(typeof p.preco==="number")t+=p.preco*l.q;else sp=true});
+return eur({preco:t})+(sp?" (+ peças com preço a confirmar)":"")}
+function resumo(){return CART.map(function(l){var p=findP(l.n);return"- "+l.q+"× "+p.nome+" (Cor: "+l.c+") — "+(typeof p.preco==="number"?eur({preco:p.preco*l.q}):"preço a confirmar")}).join("\n")}
+function renderCart(){
+$("#lines").innerHTML=CART.length?CART.map(function(l,k){var p=findP(l.n);
+return'<div class="line">'+(p.foto?'<img src="'+esc(p.foto)+'" alt="">':'<span></span>')+'<div><div class="nm">'+esc(p.nome)+'</div><div class="ctl"><span class="qty"><button type="button" data-a="m" data-k="'+k+'" aria-label="Menos">−</button><span>'+l.q+'</span><button type="button" data-a="p" data-k="'+k+'" aria-label="Mais">+</button></span><select data-k="'+k+'" aria-label="Cor">'+CORES2.map(function(c){return"<option"+(c===l.c?" selected":"")+">"+esc(c)+"</option>"}).join("")+'</select><button class="rm" type="button" data-a="r" data-k="'+k+'">Remover</button></div></div><b>'+(typeof p.preco==="number"?eur({preco:p.preco*l.q}):"—")+'</b></div>'}).join(""):'<p class="sub">O carrinho está vazio. Escolha artigos no catálogo.</p>';
+$("#tt").textContent=CART.length?total():"";
+$("#go").disabled=!CART.length}
 $("#grid").onclick=function(e){var b=e.target.closest("[data-i]");if(!b)return;
-sel=P[+b.dataset.i];
-$("#dt").textContent=sel.nome;
-$("#ds").textContent=(sel.desc?sel.desc+" · ":"")+(typeof sel.preco==="number"?eur(sel)+" (preço indicativo)":"Preço a confirmar por e-mail");
+var n=P[+b.dataset.i].nome,l=CART.filter(function(x){return x.n===n})[0];
+if(l)l.q++;else CART.push({n:n,q:1,c:CORES2[0]});
+save();b.textContent="Adicionado ✓";setTimeout(function(){b.textContent="Adicionar ao Carrinho"},1200)};
+$("#lines").onclick=function(e){var a=e.target.dataset.a,k=+e.target.dataset.k;if(!a)return;
+if(a==="p")CART[k].q++;
+if(a==="m"){CART[k].q--;if(CART[k].q<1)CART.splice(k,1)}
+if(a==="r")CART.splice(k,1);
+save();renderCart()};
+$("#lines").onchange=function(e){var k=e.target.dataset.k;if(k!=null&&e.target.tagName==="SELECT"){CART[+k].c=e.target.value;save()}};
+$("#cb").onclick=function(){renderCart();$("#dcart").showModal()};
+$("#cl2").onclick=$("#more").onclick=function(){$("#dcart").close()};
+$("#go").onclick=function(){if(!CART.length)return;$("#dcart").close();
+$("#sum").textContent=resumo()+"\nTotal indicativo: "+total();
 $("#fo").reset();$("#dlg .out").hidden=true;$("#dlg").showModal()};
 $("#cl").onclick=function(){$("#dlg").close()};
 
@@ -175,8 +228,11 @@ out.innerHTML="<b>Quase lá!</b> Abrimos o seu e-mail com o pedido pronto, basta
 out.querySelector("textarea").value=body}
 
 $("#fo").onsubmit=function(e){e.preventDefault();
-send(e.target,$("#dlg .out"),"Encomenda – "+sel.nome,
-[["Artigo","="+sel.nome],["Nome","nome"],["E-mail","email"],["Telefone","tel"],["Quantidade","qtd"],["Cor","cor"],["Morada","morada"],["Observações","obs"]])};
+var out=$("#dlg .out");
+send(e.target,out,"Encomenda – "+CART.length+" artigo(s)",
+[["Artigos","=\n"+resumo()],["Total indicativo","="+total()],["Nome","nome"],["E-mail","email"],["Telefone","tel"],["Morada","morada"],["Observações","obs"]]);
+out.insertAdjacentHTML("beforeend",'<button class="btn o" type="button" id="clr" style="margin-top:10px">Esvaziar carrinho</button>');
+$("#clr").onclick=function(){CART=[];save();$("#dlg").close()}};
 $("#fc").onsubmit=function(e){e.preventDefault();
 send(e.target,$("#personalizado .out"),"Pedido personalizado",
 [["Nome","nome"],["E-mail","email"],["Tipo","tipo"],["Cor","cor"],["Tamanho","tam"],["Texto a gravar","texto"],["Ideia","desc"]])};
